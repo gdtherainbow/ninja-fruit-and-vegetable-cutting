@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ninja Fruit and Vegetable Cutting</title>
+  <style>
+    #game-container {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      border: 1px solid #000;
+      overflow: hidden;
+    }
+
+    .fruit {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: url('fruit.png') no-repeat center center;
+      background-size: cover;
+      transition: top 1s linear;
+    }
+
+    .fruit-cut {
+      background-image: url('fruit-cut.png');
+    }
+
+    .ninja {
+      position: absolute;
+      bottom: 0;
+      width: 80px;
+      height: 80px;
+      background: url('ninja.png') no-repeat center center;
+      background-size: cover;
+      transition: left 0.2s linear;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ninja Fruit and Vegetable Cutting</h1>
+  
+  <div id="game-container">
+    <div class="fruit"></div>
+    <div class="fruit"></div>
+    <div class="fruit"></div>
+    <div class="fruit"></div>
+    <div class="fruit"></div>
+    <div class="ninja"></div>
+  </div>
+
+  <script>
+    const fruits = document.querySelectorAll('.fruit');
+    const ninja = document.querySelector('.ninja');
+    const gameContainer = document.getElementById('game-container');
+
+    let score = 0;
+
+    fruits.forEach(fruit => {
+      fruit.addEventListener('click', () => {
+        fruit.classList.add('fruit-cut');
+        score += 10;
+      });
+    });
+
+    gameContainer.addEventListener('mousemove', (e) => {
+      const containerRect = gameContainer.getBoundingClientRect();
+      const containerWidth = containerRect.width;
+      const mouseX = e.clientX - containerRect.left;
+
+      const ninjaWidth = ninja.offsetWidth;
+      const ninjaX = mouseX - ninjaWidth / 2;
+
+      if (ninjaX >= 0 && ninjaX <= containerWidth - ninjaWidth) {
+        ninja.style.left = ninjaX + 'px';
+      }
+    });
+  </script>
+</body>
+</html>
